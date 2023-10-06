@@ -16,4 +16,19 @@ export const posts: Post[] = [
     },
     viewers: [],
   },
+  {
+    id: 1,
+    title: 'Second Post',
+    content: 'A veeeery long content of the second post',
+    author: {
+      id: 1,
+      name: 'Yura',
+      email: 'yurakuzmich@gmail.com',
+      password: '12345',
+      role: UserRole.admin,
+      posts: [],
+      viewedPosts: [],
+    },
+    viewers: [],
+  },
 ];
