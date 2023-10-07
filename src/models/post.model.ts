@@ -1,9 +1,9 @@
-import { User } from './user.model';
+import { IUser } from './user.model';
 
-export interface Post {
-  id: number;
+export interface IPost {
+  id: string;
   title: string;
   content: string;
-  author: User;
-  viewers: User[];
+  author: IUser;
+  viewers: IUser[];
 }

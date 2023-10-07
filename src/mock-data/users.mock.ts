@@ -1,8 +1,8 @@
-import { User, UserRole } from 'src/models';
+import { IUser, UserRole } from 'src/models';
 
-export const users: User[] = [
+export const users: IUser[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Yura',
     email: 'yurakuzmich@gmail.com',
     password: '12345',

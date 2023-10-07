@@ -1,16 +1,16 @@
-import { Post } from './post.model';
+import { IPost } from './post.model';
 
 export enum UserRole {
   admin = 'admin',
   user = 'user',
 }
 
-export interface User {
-  id: number;
+export interface IUser {
+  id: string;
   name: string;
   email: string; // unique
   password: string;
   role: UserRole;
-  posts: Post[];
-  viewedPosts: Post[];
+  posts: IPost[];
+  viewedPosts: IPost[];
 }
