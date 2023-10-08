@@ -1,17 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { IUser } from './../models';
 import { users as mockedUsers } from './../mock-data/users.mock';
+import { User, Prisma } from '@prisma/client';
+import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
 export class UsersService {
   users: IUser[];
 
-  constructor() {
+  constructor(private prisma: PrismaService) {
     this.users = mockedUsers;
   }
 
-  getAllUsers() {
-    return this.users;
+  async getUsers(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.UserWhereUniqueInput;
+    where?: Prisma.UserWhereInput;
+    orderBy?: Prisma.UserOrderByWithRelationInput;
+  }) {
+    const { skip, take, cursor, where, orderBy } = params;
+
+    return this.prisma.user.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    });
   }
 
   getUserById(id: string) {
@@ -22,7 +38,7 @@ export class UsersService {
     return this.users.find((u) => u.email === email);
   }
 
-  addUser(user: IUser) {
-    this.users.push(user);
+  async addUser(data: Prisma.UserCreateInput) {
+    return await this.prisma.user.create({ data });
   }
 }

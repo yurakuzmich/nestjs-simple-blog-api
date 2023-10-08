@@ -1,27 +1,23 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { IPost } from '../models';
 import { PostsService } from './posts.service';
+import { Post as prismaPost } from '@prisma/client';
 
 @Controller('post')
 export class PostController {
   constructor(private postsService: PostsService) {}
 
   @Get()
-  allPosts(): IPost[] {
-    return this.postsService.getAllPosts();
+  async allPosts(): Promise<prismaPost[]> {
+    return await this.postsService.getPosts({});
   }
 
   @Get(':id')
-  getPostById(@Param() params: any) {
-    const post = this.postsService.getPostById(params.id);
-
-    return post;
+  async getPostById(@Param() params: any) {
+    return await this.postsService.getPostById({ id: Number(params.id) });
   }
 
   @Post()
-  createPost(@Body() post: IPost) {
-    this.postsService.addPost(post);
-
-    return post;
+  async createPost(@Body() post) {
+    return await this.postsService.addPost(post);
   }
 }

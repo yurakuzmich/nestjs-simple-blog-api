@@ -1,24 +1,40 @@
 import { Injectable } from '@nestjs/common';
-import { posts as allPosts } from './../mock-data/posts.mock';
-import { IPost } from './../models';
+import { Post, Prisma } from '@prisma/client';
+import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
 export class PostsService {
-  posts: IPost[];
+  constructor(private prisma: PrismaService) {}
 
-  constructor() {
-    this.posts = allPosts;
+  async getPosts(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.PostWhereUniqueInput;
+    where?: Prisma.PostWhereInput;
+    orderBy?: Prisma.PostOrderByWithRelationInput;
+  }): Promise<Post[]> {
+    const { skip, take, cursor, where, orderBy } = params;
+
+    return this.prisma.post.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+      include: { author: true, viewers: true },
+    });
   }
 
-  getAllPosts() {
-    return this.posts;
+  async getPostById(
+    PostWhereUniqueInput: Prisma.PostWhereUniqueInput,
+  ): Promise<Post | null> {
+    return this.prisma.post.findUnique({
+      where: PostWhereUniqueInput,
+      include: { author: true },
+    });
   }
 
-  getPostById(id) {
-    return this.posts.find((post) => post.id === id);
-  }
-
-  addPost(post: IPost) {
-    this.posts.push(post);
+  async addPost(data: Prisma.PostCreateInput) {
+    return this.prisma.post.create({ data });
   }
 }
