@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { posts } from './mock-data/posts.mock';
-import { IPost } from './models';
+import { posts } from '../mock-data/posts.mock';
+import { IPost } from '../models';
 
 @Controller('post')
 export class PostController {
