@@ -4,17 +4,25 @@ import { users as mockedUsers } from './../mock-data/users.mock';
 
 @Injectable()
 export class UsersService {
-  private readonly users: IUser[];
+  users: IUser[];
 
   constructor() {
     this.users = mockedUsers;
   }
 
-  async getUserById(id: string): Promise<IUser | undefined> {
-    return this.users.find((u) => u.id === id);
+  getAllUsers() {
+    return this.users;
   }
 
-  async getUserByEmail(email: string): Promise<IUser | undefined> {
+  getUserById(id: string) {
+    return this.users.find((user) => user.id === id);
+  }
+
+  getUserByEmail(email: string) {
     return this.users.find((u) => u.email === email);
+  }
+
+  addUser(user: IUser) {
+    this.users.push(user);
   }
 }

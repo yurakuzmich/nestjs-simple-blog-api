@@ -1,25 +1,28 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { posts } from '../mock-data/posts.mock';
 import { IPost } from '../models';
+import { PostsService } from './posts.service';
 
 @Controller('post')
 export class PostController {
+  constructor(private postsService: PostsService) {}
+
   @Get()
   allPosts(): IPost[] {
-    return posts;
+    return this.postsService.getAllPosts();
   }
 
   @Get(':id')
   getPostById(@Param() params: any) {
-    const post = posts.find((post) => Number(post.id) === Number(params.id));
+    console.log(params);
+    const post = this.postsService.getPostById(params.id);
 
     return post;
   }
 
   @Post()
   createPost(@Body() post: IPost) {
-    posts.push(post);
+    this.postsService.addPost(post);
 
-    return 'added!!!';
+    return post;
   }
 }
