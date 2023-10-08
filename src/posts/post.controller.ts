@@ -13,7 +13,6 @@ export class PostController {
 
   @Get(':id')
   getPostById(@Param() params: any) {
-    console.log(params);
     const post = this.postsService.getPostById(params.id);
 
     return post;
