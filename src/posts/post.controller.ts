@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { Post as prismaPost } from '@prisma/client';
 
@@ -7,8 +7,10 @@ export class PostController {
   constructor(private postsService: PostsService) {}
 
   @Get()
-  async allPosts(): Promise<prismaPost[]> {
-    return await this.postsService.getPosts({});
+  async allPosts(@Query() query): Promise<prismaPost[]> {
+    console.log(query);
+
+    return await this.postsService.getPosts(query);
   }
 
   @Get(':id')

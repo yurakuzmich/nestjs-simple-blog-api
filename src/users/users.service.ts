@@ -30,12 +30,16 @@ export class UsersService {
     });
   }
 
-  getUserById(id: string) {
-    return this.users.find((user) => user.id === id);
+  async getUserById(id: number): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: { id: Number(id) },
+    });
   }
 
-  getUserByEmail(email: string) {
-    return this.users.find((u) => u.email === email);
+  async getUserByEmail(email: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: { email },
+    });
   }
 
   async addUser(data: Prisma.UserCreateInput) {

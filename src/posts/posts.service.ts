@@ -21,7 +21,6 @@ export class PostsService {
       cursor,
       where,
       orderBy,
-      include: { author: true, viewers: true },
     });
   }
 
@@ -30,7 +29,6 @@ export class PostsService {
   ): Promise<Post | null> {
     return this.prisma.post.findUnique({
       where: PostWhereUniqueInput,
-      include: { author: true },
     });
   }
 

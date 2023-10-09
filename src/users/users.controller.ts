@@ -20,6 +20,11 @@ export class UsersController {
   }
 
   @Post()
+  async getUserByEmail(@Body() user) {
+    return await this.usersService.getUserByEmail(user.email);
+  }
+
+  @Post()
   async createUser(@Body() user) {
     return await this.usersService.addUser(user);
   }
