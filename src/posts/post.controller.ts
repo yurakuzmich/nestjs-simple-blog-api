@@ -2,6 +2,8 @@ import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { Post as prismaPost } from '@prisma/client';
 
+export class AllPostsDto {}
+
 @Controller('post')
 export class PostController {
   constructor(private postsService: PostsService) {}

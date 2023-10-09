@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { IUser } from './../models';
 import { UsersService } from './users.service';
 import { User } from '@prisma/client';
 
@@ -13,19 +12,19 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUserById(@Param() params: any) {
-    const user = this.usersService.getUserById(params.id);
-
-    return user;
+  async getUserById(@Param('id') id: number) {
+    return await this.usersService.getUserById(id);
   }
 
-  @Post()
-  async getUserByEmail(@Body() user) {
-    return await this.usersService.getUserByEmail(user.email);
-  }
+  // @Post()
+  // async getUserByEmail(@Body() user) {
+  //   return await this.usersService.getUserByEmail(user.email);
+  // }
 
   @Post()
   async createUser(@Body() user) {
+    console.log(user);
+
     return await this.usersService.addUser(user);
   }
 }
