@@ -20,8 +20,6 @@ export class PostController {
 
   @Get()
   async allPosts(@Query() query): Promise<prismaPost[]> {
-    console.log(query);
-
     return await this.postsService.getPosts(query);
   }
 
